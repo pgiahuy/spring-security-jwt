@@ -1,6 +1,6 @@
 package com.pgh.authservice.dto;
 
-import jakarta.persistence.Column;
+import com.pgh.authservice.enums.Role;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,4 +16,5 @@ public class UserRespone {
     private String username;
     private String email;
     private Boolean isActive;
+    private Role role;
 }

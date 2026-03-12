@@ -1,13 +1,11 @@
 package com.pgh.authservice.entity;
 
-import jakarta.annotation.Nullable;
+import com.pgh.authservice.enums.Role;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 @Entity
 @Data
@@ -29,6 +27,9 @@ public class User {
 
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
 
     private Boolean isActive =true;
 

@@ -11,7 +11,7 @@ public class UserMapper {
         return User.builder()
                 .username(req.getUsername())
                 .email(req.getEmail())
-                .isActive(true)
+                .isActive(false)
                 .build();
     }
 
