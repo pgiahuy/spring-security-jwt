@@ -26,11 +26,7 @@ public class UserController {
         return ResponseEntity.ok(userService.findByIdOrThrow(id));
     }
 
-    @PostMapping
-    public ResponseEntity<UserRespone> registor(@RequestBody UserCreateRequest req){
-        UserRespone userRespone = userService.createUser(req);
-        return ResponseEntity.created(URI.create("/api/admin/users/"+userRespone.getId())).body(userRespone);
-    }
+
 
 
     @DeleteMapping("/{id}")

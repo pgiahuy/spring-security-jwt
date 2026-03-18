@@ -34,16 +34,7 @@ public class UserService {
         return userRepository.findAll().stream().map(userMapper::toResponse).toList();
     }
 
-    @Transactional
-    public UserRespone createUser(UserCreateRequest req) {
-        User user = userMapper.toEntity(req);
 
-        user.setPassword(passwordEncoder.encode(req.getPassword()));
-        user.setRole(Role.USER);
-
-        userRepository.save(user);
-        return userMapper.toResponse(user);
-    }
 
     @Transactional
     public void deleteUser(Long id) {
