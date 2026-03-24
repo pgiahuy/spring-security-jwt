@@ -20,7 +20,6 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserMapper  userMapper;
-    private final PasswordEncoder passwordEncoder;
 
     @Transactional(readOnly = true)
     public UserRespone findByIdOrThrow(Long id) {
@@ -33,8 +32,6 @@ public class UserService {
     public List<UserRespone> getAll() {
         return userRepository.findAll().stream().map(userMapper::toResponse).toList();
     }
-
-
 
     @Transactional
     public void deleteUser(Long id) {

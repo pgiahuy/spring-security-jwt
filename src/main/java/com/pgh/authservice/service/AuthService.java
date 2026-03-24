@@ -6,6 +6,7 @@ import com.pgh.authservice.entity.User;
 import com.pgh.authservice.enums.Role;
 import com.pgh.authservice.mapper.UserMapper;
 import com.pgh.authservice.repository.UserRepository;
+import com.pgh.authservice.security.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final UserMapper userMapper;
+    private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
