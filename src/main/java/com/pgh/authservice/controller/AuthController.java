@@ -1,6 +1,7 @@
 package com.pgh.authservice.controller;
 
 import com.pgh.authservice.dto.UserCreateRequest;
+import com.pgh.authservice.dto.UserLogin;
 import com.pgh.authservice.dto.UserRespone;
 import com.pgh.authservice.service.AuthService;
 import com.pgh.authservice.service.UserService;
@@ -24,6 +25,11 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<UserRespone> register(@RequestBody UserCreateRequest req){
         UserRespone userRespone = authService.createUser(req);
-        return ResponseEntity.created(URI.create("/api/me/"+userRespone.getId())).body(userRespone);
+        return ResponseEntity.created(URI.create("/api/me/" + userRespone.getId())).body(userRespone);
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserRespone> login(@RequestBody UserLogin req){
+
     }
 }

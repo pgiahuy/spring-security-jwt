@@ -27,6 +27,7 @@ public class AuthService {
 
         user.setPassword(passwordEncoder.encode(req.getPassword()));
         user.setRole(Role.USER);
+        user.setIsActive(true);
 
         userRepository.save(user);
         return userMapper.toResponse(user);
