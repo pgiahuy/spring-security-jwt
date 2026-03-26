@@ -45,20 +45,22 @@ public class AuthController {
 
     @PostMapping("/refresh")
     public ResponseEntity<Map<String, String>> refreshToken(@RequestBody Map<String, String> body) {
-        String refreshToken = body.get("refreshToken");
-        Map<String, String> resp = new HashMap<>();
+        Map<String,String> resp = new HashMap<>();
+        String oldRefresh = body.get("refreshToken");
 
-        if (refreshToken == null || !refreshTokenService.validateRefreshToken(refreshToken)) {
+
+        if (oldRefresh == null || !refreshTokenService.validateRefreshToken(oldRefresh)) {
             resp.put("error", "Refresh token không hợp lệ hoặc hết hạn");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resp);
         }
 
-        String username = jwtService.extractUsername(refreshToken);
-        UserDetails user = userDetailsService.loadUserByUsername(username);
-        String newAccessToken = jwtService.generateAccessToken(user);
+        try {
+            resp = refreshTokenService.rotateRefreshToken(oldRefresh);
+        } catch (RuntimeException e) {
+            resp.put("error", e.getMessage());
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(resp);
+        }
 
-        resp.put("accessToken", newAccessToken);
-        resp.put("refreshToken", refreshToken);
         return ResponseEntity.ok(resp);
     }
 
