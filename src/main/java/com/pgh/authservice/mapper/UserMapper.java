@@ -1,7 +1,7 @@
 package com.pgh.authservice.mapper;
 
 import com.pgh.authservice.dto.UserCreateRequest;
-import com.pgh.authservice.dto.UserRespone;
+import com.pgh.authservice.dto.UserResponse;
 import com.pgh.authservice.entity.User;
 import org.springframework.stereotype.Component;
 
@@ -15,8 +15,8 @@ public class UserMapper {
                 .build();
     }
 
-    public UserRespone toResponse(User user) {
-        return UserRespone.builder()
+    public UserResponse toResponse(User user) {
+        return UserResponse.builder()
                 .id(user.getId())
                 .username(user.getUsername())
                 .email(user.getEmail())

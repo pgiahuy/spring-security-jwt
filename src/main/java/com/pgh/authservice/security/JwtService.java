@@ -22,8 +22,11 @@ public class JwtService {
     @Value("${application.security.jwt.secret-key}")
     private String secretKey;
 
-    @Value("${application.security.jwt.expiration}")
-    private long jwtExpiration;
+    @Value("${application.security.jwt.access-expiration}")
+    private long accessExpiration;
+
+    @Value("${application.security.jwt.refresh-expiration}")
+    private long refreshExpiration;
 
 
     private SecretKey getSignKey() {
@@ -32,17 +35,31 @@ public class JwtService {
     }
 
 
-    public String generateToken(UserDetails user) {
+    public String generateAccessToken(UserDetails user) {
         return Jwts.builder()
-                .subject(user.getUsername()) // lưu username
+                .subject(user.getUsername())
+
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis() + jwtExpiration))
+                .expiration(new Date(System.currentTimeMillis() + accessExpiration))
                 .signWith(getSignKey())
                 .compact();
     }
 
+    public String generateRefreshToken(UserDetails user) {
+        return Jwts.builder()
+                .subject(user.getUsername())
+                .issuedAt(new Date())
+                .expiration(new Date(System.currentTimeMillis() + refreshExpiration))
+                .signWith(getSignKey())
+                .compact();
+    }
+
+
     public String extractUsername(String token) {
         return extractAllClaims(token).getSubject();
+    }
+    public Date extractRefreshTokenExpiration(String token) {
+        return extractAllClaims(token).getExpiration();
     }
 
     public boolean isTokenValid(String token, UserDetails user) {
